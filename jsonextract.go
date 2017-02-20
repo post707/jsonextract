@@ -2,6 +2,7 @@ package jsonextract
 
 import (
 	"encoding/json"
+	"errors"
 	"strconv"
 )
 
@@ -38,13 +39,31 @@ func (myjson *JS) Getkey(key string) *JS {
 	return myjson
 }
 
+//获取数组中低num的键值
+func (myjson *JS) GetArrkey(key string, i int) *JS {
+	num := i - 1
+	if i > len((myjson.Data).([]interface{})) {
+		myjson.Data = errors.New("index out of range list").Error()
+		return myjson
+	}
+	if m, ok := (myjson.Data).([]interface{}); ok {
+		v := m[num].(map[string]interface{})
+		if h, ok := v[key]; ok {
+			myjson.Data = h
+			return myjson
+		}
+
+	}
+	myjson.Data = nil
+	return myjson
+}
+
 func (myjson *JS) GetData() map[string]interface{} {
 	if m, ok := (myjson.Data).(map[string]interface{}); ok {
 		return m
 	}
 	return nil
 }
-
 func (myjson *JS) ToString() string {
 	if m, ok := myjson.Data.(string); ok {
 		return m
