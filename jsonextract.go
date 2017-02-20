@@ -2,7 +2,6 @@ package jsonextract
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 )
 
@@ -10,16 +9,7 @@ type JS struct {
 	Data interface{}
 }
 
-func Json1(js string) map[string]interface{} {
-	var i map[string]interface{}
-	err := json.Unmarshal([]byte(js), &i)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return i
-}
-
-func Json(js string) *JS {
+func MyJson(js string) *JS {
 	j := new(JS)
 	var i interface{}
 	err := json.Unmarshal([]byte(js), &i)
@@ -30,32 +20,44 @@ func Json(js string) *JS {
 	return j
 }
 
-func (dejson *JS) Getkey(key string) *JS {
-	if v, ok := (dejson.GetData())[key]; ok {
-		dejson.Data = v
-		return dejson
+// func MyJstomap(js string) map[string]interface{} {
+// 	var i map[string]interface{}
+// 	err := json.Unmarshal([]byte(js), &i)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	return i
+// }
+
+func (myjson *JS) Getkey(key string) *JS {
+	if v, ok := (myjson.GetData())[key]; ok {
+		myjson.Data = v
+		return myjson
 	}
-	dejson.Data = nil
-	return dejson
+	myjson.Data = nil
+	return myjson
 }
 
-func (dejson *JS) GetData() map[string]interface{} {
-	if m, ok := (dejson.Data).(map[string]interface{}); ok {
+func (myjson *JS) GetData() map[string]interface{} {
+	if m, ok := (myjson.Data).(map[string]interface{}); ok {
 		return m
 	}
 	return nil
 }
 
-func (dejson *JS) ToString() string {
-	if m, ok := dejson.Data.(string); ok {
+func (myjson *JS) ToString() string {
+	if m, ok := myjson.Data.(string); ok {
 		return m
 	}
-	if m, ok := dejson.Data.(float64); ok {
+	if m, ok := myjson.Data.(float64); ok {
 		return strconv.FormatFloat(m, 'f', -1, 64)
 	}
 	return ""
 }
 
-func (dejson *JS) GetArrylen() int {
-	return len((dejson.Data).([]interface{}))
+// a := strconv.FormatFloat(10.010, 'f', -1, 64)
+// 输出：10.01
+
+func (myjson *JS) GetArrylen() int {
+	return len((myjson.Data).([]interface{}))
 }
