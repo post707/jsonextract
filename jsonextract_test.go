@@ -6,14 +6,13 @@ import (
 )
 
 func Test(t *testing.T) {
-	jsondata := `{"kind":"List","apiVersion":"v1","metadata":{"selfLink":"/api/v1","resourceVersion":"3811716"},"items":[{"name":"test1","image":"meitu"},{"name":"abcd","image":"meitu2"}]}`
+	jsondata := `{"kind":"List","apiVersion":"v1","metadata":{"selfLink":"/api/v1","resourceVersion":"000000"},"items":[{"name":"test1","name2":"meitu"},{"name":"abcd","name2":"meitu2"}]}`
 
 	t1 := MyJson(jsondata)
 	fmt.Println(t1) //&{map[metadata:map[resourceVersion:3811716 selfLink:/api/v1] items:[map[name:test1 image:meitu] map[name:abcd image:meitu2]] kind:List apiVersion:v1]}
 
 	t2 := MyJson(jsondata).Getkey("kind")
 	fmt.Println(t2) //&{List}
-
 	t3 := MyJson(jsondata).Getkey("kind").ToString()
 	fmt.Println(t3) //List
 

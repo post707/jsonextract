@@ -39,7 +39,7 @@ func (myjson *JS) Getkey(key string) *JS {
 	return myjson
 }
 
-//获取数组中低num的键值
+
 func (myjson *JS) GetArrkey(key string, i int) *JS {
 	num := i - 1
 	if i > len((myjson.Data).([]interface{})) {
@@ -74,9 +74,10 @@ func (myjson *JS) ToString() string {
 	return ""
 }
 
-// a := strconv.FormatFloat(10.010, 'f', -1, 64)
-// 输出：10.01
 
 func (myjson *JS) GetArrylen() int {
+	if myjson.Data.([]interface{}) ==nil{
+		return 0
+	}
 	return len((myjson.Data).([]interface{}))
 }
